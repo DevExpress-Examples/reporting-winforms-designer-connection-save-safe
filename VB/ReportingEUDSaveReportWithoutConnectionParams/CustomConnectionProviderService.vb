@@ -1,4 +1,4 @@
-﻿Imports DevExpress.DataAccess.ConnectionParameters
+Imports DevExpress.DataAccess.ConnectionParameters
 Imports DevExpress.DataAccess.Sql
 Imports DevExpress.DataAccess.Wizard.Services
 Imports System

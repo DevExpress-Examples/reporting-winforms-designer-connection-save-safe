@@ -1,13 +1,14 @@
-## Report Designer - How to save reports with the connection name only and omit connection parameters
+# WinForms Report Designer - How to Save Only Connection Name with Reports and Exclude Connection Parameters
 
-This example demonstrates how to customize the WinForms End-User Report Designer and allow end users to save only the name of a connection for reports created in the designer. 
+This example demonstrates how to customize the list of available connections in the WinForms End-User Report Designer and allow users to save only the connection name for newly created reports. 
 
-Implement [IConnectionStorageService](https://docs.devexpress.com/CoreLibraries/DevExpress.DataAccess.Wizard.Services.IConnectionStorageService) to provide a storage for connection strings available for newly created reports. 
-End users will chose a connection from a custom predefined list. 
-Newly created reports will store only the name of a connection and omit accompanying connection string information (e.g. data source, user id, password). 
-For this, the [connection.StoreConnectionNameOnly](https://docs.devexpress.com/CoreLibraries/DevExpress.DataAccess.Wizard.Model.IDataConnection.StoreConnectionNameOnly) option must be enabled in the [IConnectionStorageService.SaveConnection](https://docs.devexpress.com/CoreLibraries/DevExpress.DataAccess.Wizard.Services.IConnectionStorageService.SaveConnection(System.String-DevExpress.DataAccess.Wizard.Model.IDataConnection-System.Boolean)) method.
+This example implements the [IConnectionStorageService](https://docs.devexpress.com/CoreLibraries/DevExpress.DataAccess.Wizard.Services.IConnectionStorageService) to create a storage for connection strings available for the newly created reports. 
 
-Specify whether or not to include connections from the application configuration file using the IConnectionStorageService.IncludeApplicationConnections option.
-Specify whether or not to allow end users to create new connections by using the [XRDesignMdiController.DataSourceWizardSettings.SqlWizardSettings.DisableNewConnections](https://docs.devexpress.com/CoreLibraries/DevExpress.DataAccess.UI.Wizard.SqlWizardSettings.DisableNewConnections) option. 
+The users select a connection from a custom predefined list. Newly created report stores only the connection name and exclude sensitive information (data source name, username, password). For this, the [connection.StoreConnectionNameOnly](https://docs.devexpress.com/CoreLibraries/DevExpress.DataAccess.Wizard.Model.IDataConnection.StoreConnectionNameOnly) option is enabled in the [IConnectionStorageService.SaveConnection](https://docs.devexpress.com/CoreLibraries/DevExpress.DataAccess.Wizard.Services.IConnectionStorageService.SaveConnection(System.String-DevExpress.DataAccess.Wizard.Model.IDataConnection-System.Boolean)) method.
 
-To allow existing reports (the ones that end users open in the designer) to restore their connection by the name, implement the [IConnectionProviderService](https://docs.devexpress.com/CoreLibraries/DevExpress.DataAccess.Wizard.Services.IConnectionProviderService) interface.
+In code you can use the `IConnectionStorageService.IncludeApplicationConnections` option to specify whether the Data Source Wizard includes connections contained in the application configuration file.
+
+Use the [XRDesignMdiController.DataSourceWizardSettings.SqlWizardSettings.DisableNewConnections](https://docs.devexpress.com/CoreLibraries/DevExpress.DataAccess.UI.Wizard.SqlWizardSettings.DisableNewConnections) option to specify whether the users are allowed to create new connections. 
+
+Create a service that implements the [IConnectionProviderService](https://docs.devexpress.com/CoreLibraries/DevExpress.DataAccess.Wizard.Services.IConnectionProviderService) interface. The service allows users to open a saved report with a data source whose connection is specified by a name, and restore the connection to view, print, and export the report.
+

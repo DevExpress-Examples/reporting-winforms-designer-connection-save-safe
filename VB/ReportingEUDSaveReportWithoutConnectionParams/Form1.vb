@@ -1,4 +1,4 @@
-﻿Imports DevExpress.DataAccess.Wizard.Services
+Imports DevExpress.DataAccess.Wizard.Services
 Imports DevExpress.XtraReports.UI
 Imports DevExpress.XtraReports.UserDesigner
 Imports System

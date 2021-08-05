@@ -1,4 +1,4 @@
-﻿Imports DevExpress.DataAccess.ConnectionParameters
+Imports DevExpress.DataAccess.ConnectionParameters
 Imports DevExpress.DataAccess.Sql
 Imports DevExpress.DataAccess.Wizard.Model
 Imports DevExpress.DataAccess.Wizard.Native
@@ -33,7 +33,8 @@ Namespace WinEUDSaveReportWithoutConnectionParams
                     Dim root As XmlElement = doc.CreateElement(xmlRootName)
                     doc.AppendChild(root)
                     doc.Save(FileName)
-                    Dim defaultConnection As SqlDataConnection = New CustomSqlDataConnection("Default Connection", New MsSqlConnectionParameters("localhost", "NORTHWND", "", "", MsSqlAuthorizationType.Windows))
+                    Dim defaultConnection As SqlDataConnection = New CustomSqlDataConnection("Default Connection",
+                                                                                             New MsSqlConnectionParameters("localhost", "Northwind", "", "", MsSqlAuthorizationType.Windows))
                     SaveConnection(defaultConnection.Name, defaultConnection, True)
                 Catch ex As Exception
                     MessageBox.Show(String.Format("Cannot create '{0}' file because of exception:{1}{1}{2}", FileName, Environment.NewLine, ex.Message))

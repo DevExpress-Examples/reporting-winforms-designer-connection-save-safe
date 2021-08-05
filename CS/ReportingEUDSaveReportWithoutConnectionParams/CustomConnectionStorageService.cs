@@ -33,7 +33,8 @@ namespace WinEUDSaveReportWithoutConnectionParams {
                     XmlElement root = doc.CreateElement(xmlRootName);
                     doc.AppendChild(root);
                     doc.Save(FileName);
-                    SqlDataConnection defaultConnection = new CustomSqlDataConnection("Default Connection", new MsSqlConnectionParameters("localhost", "NORTHWND", "", "", MsSqlAuthorizationType.Windows));
+                    SqlDataConnection defaultConnection = new CustomSqlDataConnection("Default Connection", 
+                        new MsSqlConnectionParameters("localhost", "Northwind", "", "", MsSqlAuthorizationType.Windows));
                     SaveConnection(defaultConnection.Name, defaultConnection, true);
                 } catch (Exception ex) {
                     MessageBox.Show(string.Format("Cannot create '{0}' file because of exception:{1}{1}{2}", FileName,

@@ -19,10 +19,10 @@ Create a service that implements the [IConnectionProviderService](https://docs.d
 
 ## Files to Review
 
-* [Form1.cs](CS\ReportingEUDSaveReportWithoutConnectionParams\Form1.cs) (VB: [Form1.vb](VB\ReportingEUDSaveReportWithoutConnectionParams\Form1.vb))
-* [CustomSqlDataConnection.cs](CS\ReportingEUDSaveReportWithoutConnectionParams\CustomSqlDataConnection.cs) (VB: [CustomSqlDataConnection.vb](VB\ReportingEUDSaveReportWithoutConnectionParams\CustomSqlDataConnection.vb))
-* [CustomConnectionProviderService.cs](CS\ReportingEUDSaveReportWithoutConnectionParams\CustomConnectionProviderService.cs) (VB: [CustomConnectionProviderService.vb](VB\ReportingEUDSaveReportWithoutConnectionParams\CustomConnectionProviderService.vb))
-* [CustomConnectionStorageService.cs](CS\ReportingEUDSaveReportWithoutConnectionParams\CustomConnectionStorageService.cs) (VB: [CustomConnectionStorageService.vb](VB\ReportingEUDSaveReportWithoutConnectionParams\CustomConnectionStorageService.vb))
+* [Form1.cs](CS/ReportingEUDSaveReportWithoutConnectionParams/Form1.cs) (VB: [Form1.vb](VB/ReportingEUDSaveReportWithoutConnectionParams/Form1.vb))
+* [CustomSqlDataConnection.cs](CS/ReportingEUDSaveReportWithoutConnectionParams/CustomSqlDataConnection.cs) (VB: [CustomSqlDataConnection.vb](VB/ReportingEUDSaveReportWithoutConnectionParams/CustomSqlDataConnection.vb))
+* [CustomConnectionProviderService.cs](CS/ReportingEUDSaveReportWithoutConnectionParams/CustomConnectionProviderService.cs) (VB: [CustomConnectionProviderService.vb](VB/ReportingEUDSaveReportWithoutConnectionParams/CustomConnectionProviderService.vb))
+* [CustomConnectionStorageService.cs](CS/ReportingEUDSaveReportWithoutConnectionParams/CustomConnectionStorageService.cs) (VB: [CustomConnectionStorageService.vb](VB/ReportingEUDSaveReportWithoutConnectionParams/CustomConnectionStorageService.vb))
 
 ## Documentation
 

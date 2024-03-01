@@ -1,4 +1,4 @@
-﻿Imports DevExpress.DataAccess.ConnectionParameters
+Imports DevExpress.DataAccess.ConnectionParameters
 Imports DevExpress.DataAccess.Sql
 Imports DevExpress.DataAccess.Wizard.Model
 Imports DevExpress.DataAccess.Wizard.Native
@@ -11,25 +11,28 @@ Imports System.Windows.Forms
 Imports System.Xml
 
 Namespace WinEUDSaveReportWithoutConnectionParams
+
     Friend Class CustomConnectionStorageService
         Implements IConnectionStorageService
 
-        Public ReadOnly Property CanSaveConnection() As Boolean Implements IConnectionStorageService.CanSaveConnection
+        Public ReadOnly Property CanSaveConnection As Boolean Implements IConnectionStorageService.CanSaveConnection
             Get
                 Return True
             End Get
         End Property
 
-        Private Function IConnectionStorageService_Contains(ByVal connectionName As String) As Boolean Implements IConnectionStorageService.Contains
+        Private Function Contains(ByVal connectionName As String) As Boolean Implements IConnectionStorageService.Contains
             Return If(IncludeApplicationConnections, DefaultStorage.Contains(connectionName) OrElse ConnectionProviderService.GetConnectionsFromXml().Any(Function(c) String.Equals(c.Name, connectionName)), ConnectionProviderService.GetConnectionsFromXml().Any(Function(c) String.Equals(c.Name, connectionName)))
         End Function
-        Private Function IConnectionStorageService_GetConnections() As IEnumerable(Of DevExpress.DataAccess.Sql.SqlDataConnection) Implements IConnectionStorageService.GetConnections
+
+        Private Function GetConnections() As IEnumerable(Of SqlDataConnection) Implements IConnectionStorageService.GetConnections
             Return If(IncludeApplicationConnections, DefaultStorage.GetConnections().Union(ConnectionProviderService.GetConnectionsFromXml()), ConnectionProviderService.GetConnectionsFromXml())
         End Function
+
         Private Sub CreateDefaultConnection()
             If Not File.Exists(FileName) Then
                 Try
-                    Dim doc As New XmlDocument()
+                    Dim doc As XmlDocument = New XmlDocument()
                     Dim root As XmlElement = doc.CreateElement(xmlRootName)
                     doc.AppendChild(root)
                     doc.Save(FileName)
@@ -40,24 +43,25 @@ Namespace WinEUDSaveReportWithoutConnectionParams
                 End Try
             End If
         End Sub
+
         Public Sub SaveConnection(ByVal connectionName As String, ByVal connection As IDataConnection, ByVal saveCredentials As Boolean) Implements IConnectionStorageService.SaveConnection
             connection.StoreConnectionNameOnly = True
             Try
-                Dim doc As New XmlDocument()
+                Dim doc As XmlDocument = New XmlDocument()
                 Dim root As XmlElement = Nothing
                 If File.Exists(FileName) Then
                     doc.Load(FileName)
                     root = doc.DocumentElement
                     If root IsNot Nothing Then
-                        If root.Name <> xmlRootName Then
+                        If Not Equals(root.Name, xmlRootName) Then
                             MessageBox.Show(String.Format("Document element is '{0}', '{1}' expected", root.Name, xmlRootName))
                             Return
                         End If
-                        If root.SelectSingleNode(String.Format("Connection[Name = '{0}']", connectionName)) IsNot Nothing Then
-                            Return
-                        End If
+
+                        If root.SelectSingleNode(String.Format("Connection[Name = '{0}']", connectionName)) IsNot Nothing Then Return
                     End If
                 End If
+
                 If root Is Nothing Then
                     root = doc.CreateElement(xmlRootName)
                     doc.AppendChild(root)
@@ -65,30 +69,31 @@ Namespace WinEUDSaveReportWithoutConnectionParams
 
                 Dim nameElement As XmlElement = doc.CreateElement("Name")
                 nameElement.AppendChild(doc.CreateTextNode(connectionName))
-
                 Dim connectionStringElement As XmlElement = doc.CreateElement("ConnectionString")
                 connectionStringElement.AppendChild(doc.CreateTextNode(connection.CreateConnectionString(Not saveCredentials)))
-
                 Dim connectionElement As XmlElement = doc.CreateElement("Connection")
                 connectionElement.AppendChild(nameElement)
                 connectionElement.AppendChild(connectionStringElement)
-
                 root.AppendChild(connectionElement)
                 doc.Save(FileName)
             Catch ex As Exception
                 MessageBox.Show(String.Format("Cannot save connection to '{0}' because of exception:{1}{1}{2}", FileName, Environment.NewLine, ex.Message))
             End Try
         End Sub
-        Private Const xmlRootName As String = "Connections"
+
+        Const xmlRootName As String = "Connections"
 
         Public Sub New(ByVal connectionProviderService As CustomConnectionProviderService)
             CreateDefaultConnection()
             Me.ConnectionProviderService = connectionProviderService
         End Sub
-        Public ReadOnly Property ConnectionProviderService() As CustomConnectionProviderService
-        Public Property FileName() As String = "connections.xml"
-        Public Property IncludeApplicationConnections() As Boolean = False
-        Protected ReadOnly Property DefaultStorage() As New ConnectionStorageService()
+
+        Public ReadOnly Property ConnectionProviderService As CustomConnectionProviderService
+
+        Public Property FileName As String = "connections.xml"
+
+        Public Property IncludeApplicationConnections As Boolean = False
+
+        Protected ReadOnly Property DefaultStorage As ConnectionStorageService = New ConnectionStorageService()
     End Class
 End Namespace
-
